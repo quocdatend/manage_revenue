@@ -1,4 +1,4 @@
-package com.hongoquocdat.manage_revenue;
+package com.hongoquocdat.manage_revenue.ui.main;
 
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +14,7 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.hongoquocdat.manage_revenue.R;
 import com.hongoquocdat.manage_revenue.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
