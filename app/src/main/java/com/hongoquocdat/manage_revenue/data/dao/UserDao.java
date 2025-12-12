@@ -23,6 +23,9 @@ public interface UserDao {
     @Delete
     void delete(User user);
 
+    @Query("SELECT * FROM users WHERE name = :userName AND pass = :password")
+    User getUser(String userName, String password);
+
     @Query("SELECT * FROM users ORDER BY id DESC")
     LiveData<List<User>> getAllUsers();
 }
