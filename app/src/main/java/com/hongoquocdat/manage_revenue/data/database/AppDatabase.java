@@ -5,14 +5,17 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 
 import com.hongoquocdat.manage_revenue.data.dao.UserDao;
 import com.hongoquocdat.manage_revenue.data.entity.User;
+import com.hongoquocdat.manage_revenue.utils.RoleConverter;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {User.class}, version = 1, exportSchema = false)
+@Database(entities = {User.class}, version = 1)
+@TypeConverters({RoleConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
 
     private static volatile AppDatabase INSTANCE;
@@ -29,8 +32,9 @@ public abstract class AppDatabase extends RoomDatabase {
                     INSTANCE = Room.databaseBuilder(
                             context.getApplicationContext(),
                             AppDatabase.class,
-                            "revenue_database"
-                    ).build();
+                            "revenue_database.db"
+                    )
+                            .allowMainThreadQueries().build();
                 }
             }
         }

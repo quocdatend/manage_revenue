@@ -16,8 +16,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.hongoquocdat.manage_revenue.R;
+import com.hongoquocdat.manage_revenue.data.entity.User;
 import com.hongoquocdat.manage_revenue.databinding.ActivityIntroBinding;
 import com.hongoquocdat.manage_revenue.databinding.ActivitySignInBinding;
+import com.hongoquocdat.manage_revenue.repository.UserRepository;
 import com.hongoquocdat.manage_revenue.ui.intro.IntroActivity;
 import com.hongoquocdat.manage_revenue.ui.intro.IntroViewModel;
 import com.hongoquocdat.manage_revenue.ui.main.MainActivity;
@@ -39,7 +41,7 @@ public class SignInActivity extends AppCompatActivity{
     private void addEvents() {
         setupRegisterLink();
 
-        // click text log in
+        login();
 
     }
 
@@ -67,5 +69,28 @@ public class SignInActivity extends AppCompatActivity{
         // Đảm bảo TextView có thể nhận sự kiện click
         textView.setMovementMethod(LinkMovementMethod.getInstance());
         // Xử lý sự kiện khi người dùng nhấn nút đăng ký
+    }
+
+    private void login() {
+        binding.btnSignIn.setOnClickListener(v -> {
+            String name = binding.editTextName.getText().toString().trim();
+            String pass = binding.editTextPassword.getText().toString().trim();
+            if (name.isEmpty() || pass.isEmpty()){
+                binding.editTextName.setError("Please enter your name");
+                binding.editTextPassword.setError("Please enter your password");
+            } else {
+                // check user
+                UserRepository userRepository = new UserRepository(this.getApplication());
+                User user = userRepository.getUser(name, pass);
+                if (user == null) {
+                    binding.editTextName.setError("Invalid name or password");
+                    binding.editTextPassword.setError("Invalid name or password");
+                } else{
+                    Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        });
     }
 }

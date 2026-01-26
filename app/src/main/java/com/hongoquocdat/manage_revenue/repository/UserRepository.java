@@ -18,7 +18,6 @@ public class UserRepository {
     public UserRepository(Application application) {
         AppDatabase db = AppDatabase.getInstance(application);
         userDao = db.userDao();
-        allUsers = userDao.getAllUsers();
     }
 
     public LiveData<List<User>> getAllUsers() {
@@ -41,5 +40,9 @@ public class UserRepository {
         AppDatabase.getDatabaseWriteExecutor().execute(() -> {
             userDao.delete(user);
         });
+    }
+
+    public User getUser(String userName, String password) {
+        return userDao.getUser(userName, password);
     }
 }
